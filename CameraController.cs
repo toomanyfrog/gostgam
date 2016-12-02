@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
@@ -11,9 +11,12 @@ public class CameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		transform.position = new Vector3 (0, 0, -10);
+		xMin = 9 - GameManager.mapSize.x / 2;
+		xMax = GameManager.mapSize.x / 2 - 9;
+		yMin = 9 - GameManager.mapSize.y / 2;
+		yMax = GameManager.mapSize.y / 2 - 9;
 		offset = transform.position - player.transform.position;
-	
 	}
 
 	void LateUpdate () {
