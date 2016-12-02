@@ -4,7 +4,8 @@ using System.Collections;
 public class GhostController : MonoBehaviour {
 
 	public float speed = 1;
-	public float constancy = 2;
+	public float timeInDirection = 2;
+	public int timesSnapped = 0;
 
 	private float time = 0;
 	private Vector2 dir;
@@ -19,12 +20,14 @@ public class GhostController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (time < constancy) {
+		if (time < timeInDirection) {
 			transform.Translate (dir * speed * Time.deltaTime);
 		} else {
 			pickDir ();
 			time = 0;
 		}
+
+		Debug.Log (timesSnapped);
 
 		time += Time.deltaTime;
 

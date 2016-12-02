@@ -36,19 +36,17 @@ public class PlayerCollision : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
 
-		if (other.gameObject.tag == "Good Zone") {
-
-			//StartCoroutine (MakeOpaque(other.gameObject.GetComponent<SpriteRenderer>(), goodZoneTime));
+		if (other.gameObject.tag == "Good Zone" && Input.GetButtonDown ("Snap") == true) {
+			
 			timeInGoodZone += Time.deltaTime;
+			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
+			ghost.timesSnapped += 1;
 
 		}
 
 		if (timeInGoodZone >= goodZoneTime) {
 
 			other.gameObject.transform.parent.transform.position = new Vector3 (Random.Range(-10, 10), Random.Range(-10, 10));
-			//SpriteRenderer sr = other.gameObject.GetComponent<SpriteRenderer> ();
-			//sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, goodZoneInitOpacity);
-
 		}
 
 
@@ -58,20 +56,8 @@ public class PlayerCollision : MonoBehaviour {
 
 		if (other.gameObject.tag == "Good Zone") {
 
-			//StopCoroutine ("MakeOpaque");
-			//SpriteRenderer sr = other.gameObject.GetComponent<SpriteRenderer> ();
-			//sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, goodZoneInitOpacity);
 			timeInGoodZone = 0;
 
-		}
-
-	}
-
-	IEnumerator MakeOpaque(SpriteRenderer sr, float duration) {
-
-		for (float t = 0.0f; t < 1.0f; t+= Time.deltaTime/duration) {
-			sr.color = new Color (sr.color.r, sr.color.g, sr.color.b, Mathf.Lerp(0, 1, duration));
-			yield return null;
 		}
 
 	}
