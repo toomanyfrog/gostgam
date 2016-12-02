@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour {
 	public static int score = 0;
 	public static int lives = 10;
 	public float gameLength = 60;
-	public static Vector2 mapSize = new Vector2(18, 18);
+	public static Vector2 mapSize = new Vector2(30, 30);
 
 	public Text scoreText;
+	public Text livesText;
 
 	private float time;
 
@@ -23,9 +24,16 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () { 
 
-		scoreText.text = score.ToString();
+		scoreText.text = score.ToString ();
+		livesText.text = lives.ToString ();
+
+		if (lives <= 0) {
+
+
+
+		}
 
 	}
 }
