@@ -49,7 +49,7 @@ public class GhostController : MonoBehaviour {
 		//Debug.Log (time);
 	}
 	public void goAway() {
-		gameObject.transform.position = new Vector3 ((Random.Range(0, 1)*2-1)*GameManager.mapSize.x/2, (Random.Range(0, 1)*2-1)*GameManager.mapSize.y/2)
+		gameObject.transform.position = new Vector3 ((Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.x / 2, (Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.y / 2);
 	}
 
 
