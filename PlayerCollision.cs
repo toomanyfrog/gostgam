@@ -27,8 +27,8 @@ public class PlayerCollision : MonoBehaviour {
 		if (other.gameObject.tag == "Bad Zone") {
 
 			timeInGoodZone = 0;
-			gameObject.transform.position = new Vector3 ((Random.Range(0, 1)*2-1)*GameManager.mapSize.x/2, (Random.Range(0, 1)*2-1)*GameManager.mapSize.y/2);
-
+			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
+			ghost.goAway ();
 		}
 
 
@@ -47,8 +47,8 @@ public class PlayerCollision : MonoBehaviour {
 
 		if (timeInGoodZone >= goodZoneTime) {
 
-			other.gameObject.transform.parent.transform.position = new Vector3 (Random.Range(-10, 10), Random.Range(-10, 10));
-		}
+			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
+			ghost.goAway ();		}
 
 
 	}

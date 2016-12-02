@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
 	void Update () { 
 
 		scoreText.text = score.ToString ();
-		livesText.text = lives.ToString ();
+	//	livesText.text = lives.ToString ();
 
 		if (lives <= 0) {
 

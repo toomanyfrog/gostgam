@@ -4,7 +4,7 @@ using System.Collections;
 public class GhostController : MonoBehaviour {
 
 	public float speed = 1;
-	public float timeInDirection = 2;
+	public float timeInDirection = 4;
 	public int timesSnapped = 0;
 	public int snapsAllowed = 3;
 
@@ -36,7 +36,7 @@ public class GhostController : MonoBehaviour {
 			transform.position = new Vector2(pos.x, -1*pos.y) ;
 		}
 		if (timesSnapped >= snapsAllowed) {
-			gameObject.transform.position = new Vector3 ((Random.Range(0, 1)*2-1)*GameManager.mapSize.x/2, (Random.Range(0, 1)*2-1)*GameManager.mapSize.y/2);
+			goAway ();
 			timesSnapped = 0;
 
 		}
@@ -47,6 +47,9 @@ public class GhostController : MonoBehaviour {
 	void pickDir() {
 		dir = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
 		//Debug.Log (time);
+	}
+	public void goAway() {
+		gameObject.transform.position = new Vector3 ((Random.Range(0, 1)*2-1)*GameManager.mapSize.x/2, (Random.Range(0, 1)*2-1)*GameManager.mapSize.y/2)
 	}
 
 
