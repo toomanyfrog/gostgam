@@ -5,9 +5,6 @@ public class PlayerController : MonoBehaviour {
 
 	public float speed = 1;
 
-	private float speedMult = 10;
-
-
 	// Use this for initialization
 	void Start () {
 		
@@ -20,14 +17,9 @@ public class PlayerController : MonoBehaviour {
 		float moveHorz = Input.GetAxis ("Horizontal");
 		float moveVert = Input.GetAxis ("Vertical");
 
-
 		Vector2 movement = new Vector2 (moveHorz, moveVert);
 
 		transform.Translate (movement * speed * Time.deltaTime);
-
-		Debug.Log (moveHorz + ", " + moveVert);
-
-		
 
 	}
 }
