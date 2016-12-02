@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		transform.position = new Vector2 (0, 0);
-
 		anim = this.GetComponent<Animator> ();
 		size = new Vector2 (gameObject.transform.localScale.x, gameObject.transform.localScale.y);
 		sr = this.GetComponent<SpriteRenderer> ();
@@ -36,11 +35,11 @@ public class PlayerController : MonoBehaviour {
 
 		} else {
 			
-
 			anim.SetBool ("isMoving", true);
 
-
 			if (Mathf.Abs (moveHorz) - Mathf.Abs (moveVert) >= 0.1f) {
+
+				Debug.Log (1);
 
 				if (moveHorz > 0) { // face right
 
@@ -48,6 +47,8 @@ public class PlayerController : MonoBehaviour {
 
 				}
 				anim.SetBool ("isSideWalking", true);
+
+			} else {
 
 				sr.flipX = false;
 				anim.SetBool ("isSideWalking", false);
@@ -58,7 +59,6 @@ public class PlayerController : MonoBehaviour {
 
 
 		Vector2 movement = new Vector2 (moveHorz, moveVert);
-		Debug.Log (movement);
 
 		if (Input.GetAxis ("Snap") == 1) { // taking photo
 
