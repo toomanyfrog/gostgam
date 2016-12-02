@@ -19,7 +19,10 @@ public class CameraController : MonoBehaviour {
 	void LateUpdate () {
 
 		Vector3 newPos = player.transform.position + offset;
-		this.transform.position = newPos;
+
+		this.transform.position = new Vector3 (Mathf.Clamp(newPos.x, xMin, xMax),
+			Mathf.Clamp(newPos.y, yMin, yMax),
+			newPos.z);
 
 	}
 }
