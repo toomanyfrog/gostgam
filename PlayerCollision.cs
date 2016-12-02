@@ -38,7 +38,7 @@ public class PlayerCollision : MonoBehaviour {
 
 		if (other.gameObject.tag == "Good Zone" && Input.GetButtonDown ("Snap") == true) {
 			
-			timeInGoodZone += Time.deltaTime;
+			timeInGoodZone += Time.deltaTime; 
 			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
 			ghost.timesSnapped += 1;
 			Debug.Log (ghost.timesSnapped);
