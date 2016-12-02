@@ -25,16 +25,24 @@ public class GhostController : MonoBehaviour {
 			transform.Translate (dir * speed * Time.deltaTime);
 		} else {
 			pickDir ();
+			transform.Translate (dir * speed * Time.deltaTime);
 			time = 0;
 		}
-		if (transform.position.x <= (-1 * GameManager.mapSize.x / 2) || transform.position.x >= (GameManager.mapSize.x / 2)) {
+		if (transform.position.x <= (-1 * GameManager.mapSize.x / 2)) {
 			Vector2 pos = transform.position;
-			transform.position = new Vector2(-1*pos.x, pos.y) ;
-		}		
-		if (transform.position.y <= (-1 * GameManager.mapSize.y / 2) || transform.position.y >= (GameManager.mapSize.y / 2)) {
+			transform.position = new Vector2 (GameManager.mapSize.x/2 + pos.x, pos.y);
+		} else if (transform.position.x >= (GameManager.mapSize.x / 2)) {
 			Vector2 pos = transform.position;
-			transform.position = new Vector2(pos.x, -1*pos.y) ;
+			transform.position = new Vector2 (pos.x - GameManager.mapSize.x/2, pos.y);
 		}
+		if (transform.position.y <= (-1 * GameManager.mapSize.y / 2)) {
+			Vector2 pos = transform.position;
+			transform.position = new Vector2 (pos.x, GameManager.mapSize.y/2 + pos.y);
+		} else if (transform.position.y >= (GameManager.mapSize.y / 2)) {
+			Vector2 pos = transform.position;
+			transform.position = new Vector2 (pos.x, pos.y - GameManager.mapSize.y/2);
+		}
+
 		if (timesSnapped >= snapsAllowed) {
 			goAway ();
 			timesSnapped = 0;
@@ -45,7 +53,7 @@ public class GhostController : MonoBehaviour {
 	}
 
 	void pickDir() {
-		dir = new Vector2 (Random.Range (-1, 1), Random.Range (-1, 1));
+		dir = new Vector2 (Random.Range (0, 1) * 2 - 1, Random.Range (0, 1) * 2 - 1);
 		//Debug.Log (time);
 	}
 	public void goAway() {
