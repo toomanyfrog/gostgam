@@ -41,7 +41,9 @@ public class GhostFactory : MonoBehaviour {
 		GhostController ghostie = Instantiate(normghost) //Random.value < 0.5 ? normghost : wheelghost)
 			.GetComponent<GhostController>();
 		ghostie.baseSpeed += 0.2f;
-		ghostie.basePoseTime -= 0.1f;
+		if (ghostie.basePoseTime > 1.6) {
+			ghostie.basePoseTime -= 0.1f;
+		}
 		ghostie.baseOuter -= 0.1f;
 		ghostie.baseInner += 0.1f;
 			

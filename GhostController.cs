@@ -4,7 +4,7 @@ using System.Collections;
 public class GhostController : MonoBehaviour {
 
 	public float baseSpeed = 2;
-	public float basePoseTime = 3;
+	public float basePoseTime = 4;
 	public float baseWalkTime = 6;
 	public float baseOuter = 12.5f;
 	public float baseInner = 4.5f;
@@ -122,9 +122,9 @@ public class GhostController : MonoBehaviour {
 		return (speed > 0.75 ? 1 : 0) + (speed > 1 ? 1 : 0) + (speed > 1.25 ? 1 : 0) + (donutsize < 2.5 ? 1 : 0) + (donutsize < 2 ? 1 : 0) + (donutsize < 1.5 ? 1 : 0)
 			+ (poseTime < 2.25 ? 1 : 0) + (poseTime < 2 ? 1 : 0) + (poseTime < 1.75 ? 1 : 0);
 	}
-	private void reincarnate() {
+	public void reincarnate() {
 		transform.position = new Vector3 (Random.value * GameManager.mapSize.x - GameManager.mapSize.x / 2, Random.value * GameManager.mapSize.y - GameManager.mapSize.y / 2);
-		float scale = (Random.value/1.5f - 0.33f) + 0.5f;
+		float scale = (Random.value/2f - 0.25f) + 0.6f;
 		transform.localScale = new Vector3 (scale, scale, 1);
 		pickDir (); 
 		outer = (float)Random.value + baseOuter - 0.5f;

@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour {
 
 	public float goodZoneInitOpacity = 0.274f;
 	public float goodZoneEndOpacity = 0.6f;
-	public float cameraSkills = 17 / (12 * 1.3f);
+	public float cameraSkills = 17 / (12 * 1.8f);
 	private float snapshotTime = 0;
 	private float timeInGoodZone = 0;
 
@@ -47,7 +47,7 @@ public class PlayerCollision : MonoBehaviour {
 			if (snapshotTime >= cameraSkills) {
 				timeInGoodZone += Time.deltaTime; 
 				GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController> ();
-				ghost.timesSnapped += 1;
+				ghost.reincarnate();
 				GameManager.score += (int)(ghost.getDifficulty() * 50);
 				Debug.Log ("YAY!                     " + ghost.timesSnapped);
 				snapshotTime = 0;
