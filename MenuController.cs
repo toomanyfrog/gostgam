@@ -7,12 +7,14 @@ public class MenuController : MonoBehaviour {
 	public GameObject[] buttons;
 	public Sprite[] sprites;
 
+	private AudioSource audS;
 	private float time;
 
 	private int selected;
 
 	void Start () {
 	
+		audS = GetComponent<AudioSource> ();
 		selected = 1;
 
 	}
@@ -24,9 +26,11 @@ public class MenuController : MonoBehaviour {
 			time = 0;
 
 			if (Input.GetAxis ("UI Horz") > 0 && selected < 3) {
+				audS.Play ();
 				selected++;
 			}
 			if (Input.GetAxis ("UI Horz") < 0 && selected > 0) {
+				audS.Play ();
 				selected--;
 			}
 
@@ -50,6 +54,7 @@ public class MenuController : MonoBehaviour {
 
 			default:
 				SceneManager.LoadScene ("main");
+				break;
 
 
 			}

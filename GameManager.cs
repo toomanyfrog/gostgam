@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject overlay;
 
 	public float gameLength = 60;
-	public static Vector2 mapSize = new Vector2(30, 30);
+	public static Vector2 mapSize = new Vector2(50, 50);
 
 	public Text scoreText;
 	public Text livesText;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 
 		if (Input.GetKeyDown(KeyCode.DownArrow)) {
 			lives -= 1;
@@ -50,13 +51,29 @@ public class GameManager : MonoBehaviour {
 		livesText.text = lives.ToString ();
 
 		if (lives <= 0 && !isGameOver) { // game over
+=======
+
+		if (Input.GetKeyDown(KeyCode.DownArrow)) {
+			lives -= 1;
+		}
+
+
+		scoreText.text = score.ToString ();
+		livesText.text = lives.ToString ();
+
+		if (lives <= 0 && !isGameOver) { // game over
+
+>>>>>>> 656d77208a79554d79007f00efbef2f63123e4e0
 			isGameOver = true;
 			scoreText.text = "";
 			livesText.text = "";
 			finalScore.text = score.ToString();
 			finalScoreText.text = keepText;
 			overlay.GetComponent<SpriteRenderer> ().color = new Color (1.0f, 1.0f, 1.0f, 0.5f);
+<<<<<<< HEAD
 			PlayerPrefs.SetInt ("Last Score", score);
+=======
+>>>>>>> 656d77208a79554d79007f00efbef2f63123e4e0
 
 		}
 
