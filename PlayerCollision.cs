@@ -8,6 +8,7 @@ public class PlayerCollision : MonoBehaviour {
 	public float goodZoneInitOpacity = 0.274f;
 	public float goodZoneEndOpacity = 0.6f;
 
+	private float snapshotTime = 0;
 	private float timeInGoodZone = 0;
 
 
@@ -18,7 +19,12 @@ public class PlayerCollision : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetButton ("Snap") == true) {
+			snapshotTime += Time.deltaTime;
+		}
+		if (Input.GetButtonUp ("Snap") == true || Input.GetButtonDown("Snap") == true) {
+			snapshotTime = 0;
+		}
 	}
 
 
@@ -29,6 +35,7 @@ public class PlayerCollision : MonoBehaviour {
 			timeInGoodZone = 0;
 			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
 			ghost.goAway ();
+			GameManager.lives -= 1;
 		}
 
 
@@ -36,12 +43,14 @@ public class PlayerCollision : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
 
-		if (other.gameObject.tag == "Good Zone" && Input.GetButtonDown ("Snap") == true) {
-			
-			timeInGoodZone += Time.deltaTime; 
-			GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController>();
-			ghost.timesSnapped += 1;
-			Debug.Log (ghost.timesSnapped);
+		if (other.gameObject.tag == "Good Zone") {
+			if (snapshotTime >= 0.6) {
+				timeInGoodZone += Time.deltaTime; 
+				GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController> ();
+				ghost.timesSnapped += 1;
+				Debug.Log ("YAY!                     " + ghost.timesSnapped);
+				snapshotTime = 0;
+			}
 
 		}
 
@@ -56,7 +65,7 @@ public class PlayerCollision : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other) {
 
 		if (other.gameObject.tag == "Good Zone") {
-
+			snapshotTime = 0;
 			timeInGoodZone = 0;
 
 		}
