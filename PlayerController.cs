@@ -3,22 +3,22 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
+
 	public float speed = 5;
 
 	private Vector2 size;
 
-	private Animator anim;
+	private Animator animator;
 	private SpriteRenderer sr;
 	private bool isFlipped;
 
 	// Use this for initialization
 	void Start () {
 		transform.position = new Vector2 (0, 0);
-		anim = this.GetComponent<Animator> ();
+		animator = this.GetComponent<Animator> ();
 		size = new Vector2 (gameObject.transform.localScale.x, gameObject.transform.localScale.y);
 		sr = this.GetComponent<SpriteRenderer> ();
 		sr.flipX = false;
-
 	}
 
 	// Update is called once per frame
@@ -31,27 +31,26 @@ public class PlayerController : MonoBehaviour {
 
 		if (moveHorz == 0 && moveVert == 0) {
 
-			anim.SetBool ("isMoving", false);
+			animator.SetBool ("isMoving", false);
 
 		} else {
 			
-			anim.SetBool ("isMoving", true);
+			animator.SetBool ("isMoving", true);
 
+			// Check if moving horizontally more than moving vertically
 			if (Mathf.Abs (moveHorz) - Mathf.Abs (moveVert) >= 0.1f) {
-
-				Debug.Log (1);
 
 				if (moveHorz > 0) { // face right
 
 					sr.flipX = true;
 
 				}
-				anim.SetBool ("isSideWalking", true);
+				animator.SetBool ("isSideWalking", true);
 
 			} else {
 
 				sr.flipX = false;
-				anim.SetBool ("isSideWalking", false);
+				animator.SetBool ("isSideWalking", false);
 
 			}
 				
@@ -60,17 +59,33 @@ public class PlayerController : MonoBehaviour {
 
 		Vector2 movement = new Vector2 (moveHorz, moveVert);
 
-		if (Input.GetAxis ("Snap") == 1) { // taking photo
-
-
+		if (Input.GetButton("Snap")) { // taking photo
+			
 			sr.flipX = false;
-			anim.SetBool ("isSnapping", true);
+			animator.SetBool ("isSnapping", true);
 
 		} else {
 
-			anim.SetBool ("isSnapping", false);
+			animator.SetBool ("isSnapping", false);
 			transform.Translate (movement * speed * Time.deltaTime);
 		}
+
+	}
+
+
+	// Animator related methods
+
+	bool AnimatorIsPlaying(){
+		return ( animator.GetCurrentAnimatorClipInfo (0).Length > animator.GetCurrentAnimatorStateInfo (0).normalizedTime ) ;
+	}
+
+	bool AnimatorIsPlaying(string stateName){
+		return AnimatorIsPlaying() && animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+	}
+
+	void playCameraClick() {
+
+		SoundManager.instance.playCameraClick ();
 
 	}
 
