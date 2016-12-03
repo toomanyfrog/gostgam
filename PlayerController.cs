@@ -45,11 +45,18 @@ public class PlayerController : MonoBehaviour {
 					sr.flipX = true;
 
 				}
+				animator.SetBool ("isBackWalking", false);
 				animator.SetBool ("isSideWalking", true);
+
+			} else if (moveVert > 0) {
+				
+				sr.flipX = false;
+				animator.SetBool ("isBackWalking", true);
 
 			} else {
 
 				sr.flipX = false;
+				animator.SetBool ("isBackWalking", false);
 				animator.SetBool ("isSideWalking", false);
 
 			}

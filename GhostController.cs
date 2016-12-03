@@ -94,7 +94,7 @@ public class GhostController : MonoBehaviour {
 		}
 	
 		if (timesSnapped >= snapsAllowed) {
-			reincarnate ();
+			animator.SetBool ("isDisappearing", true);
 			//GameManager.score += (int)(getDifficulty() * 50);
 		}
 		time += Time.deltaTime;
@@ -111,11 +111,11 @@ public class GhostController : MonoBehaviour {
 		//Debug.Log (time);
 	}
 	public void goAway() {
-		animator.SetBool ("isDisappearing", true);
+		animator.SetBool ("isDisappearing2", true);
 	}
 	public void actuallyGoAway() {
 		gameObject.transform.position = new Vector3 ((Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.x / 2, (Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.y / 2);
-		animator.SetBool ("isDisappearing", false);
+		animator.SetBool ("isDisappearing2", false);
 	}
 	public float getDifficulty() {
 		float donutsize = outer - inner;
@@ -136,8 +136,9 @@ public class GhostController : MonoBehaviour {
 		poseTime = (float)Random.value + basePoseTime - 0.5f;
 		timesSnapped = 0;
 		walkTime = (float)Random.value*4 + baseWalkTime - 2f;
-		animator.SetBool ("isDisappearing", false);
+		animator.SetBool ("isDisappearing2", false);
 		animator.SetBool ("isPosing", false);
+		animator.SetBool ("isDisappearing", false);
 	}
 
 
