@@ -5,6 +5,7 @@ public class SoundManager : MonoBehaviour {
 
 	public static SoundManager instance;
 	public AudioClip cameraClick;
+	public AudioClip poof;
 
 	private AudioSource audSource;
 
@@ -22,6 +23,13 @@ public class SoundManager : MonoBehaviour {
 	public void playCameraClick() {
 
 		audSource.clip = cameraClick;
+		audSource.Play ();
+
+	}
+
+	public void playPoof() {
+
+		audSource.clip = poof;
 		audSource.Play ();
 
 	}

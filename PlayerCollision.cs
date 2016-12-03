@@ -44,10 +44,11 @@ public class PlayerCollision : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other) {
 
 		if (other.gameObject.tag == "Good Zone") {
-			if (snapshotTime >= 0.6) {
+			if (snapshotTime >= 1.08) {
 				timeInGoodZone += Time.deltaTime; 
 				GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController> ();
 				ghost.timesSnapped += 1;
+				GameManager.score += (int)(ghost.getDifficulty() * 50);
 				Debug.Log ("YAY!                     " + ghost.timesSnapped);
 				snapshotTime = 0;
 			}
