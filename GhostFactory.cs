@@ -10,6 +10,7 @@ public class GhostFactory : MonoBehaviour {
 	public float difficultyUpdateInterval;
 	public float maxSpawnInterval;
 	private float lastDifficultyUpdate = 0;
+	public GameObject player;
 
 	public GameObject normghost;
 	//public GameObject wheelghost;
@@ -39,12 +40,11 @@ public class GhostFactory : MonoBehaviour {
 
 		GhostController ghostie = Instantiate(normghost) //Random.value < 0.5 ? normghost : wheelghost)
 			.GetComponent<GhostController>();
-		ghostie.timeInDirection = Random.Range (1, 8);
-		ghostie.baseSpeed += 0.1f;
+		ghostie.baseSpeed += 0.2f;
 		ghostie.basePoseTime -= 0.1f;
-		ghostie.baseOuter -= 0.05f;
-		ghostie.baseInner += 0.05f;
-
+		ghostie.baseOuter -= 0.1f;
+		ghostie.baseInner += 0.1f;
+			
 		Invoke("Spawn", spawnInterval);
 	}
 	void firstSpawn()

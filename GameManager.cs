@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject overlay;
 
 	public float gameLength = 60;
-	public static Vector2 mapSize = new Vector2(50, 50);
+	public static Vector2 mapSize = new Vector2(30, 30);
 
 	public Text scoreText;
 	public Text livesText;
@@ -29,8 +29,8 @@ public class GameManager : MonoBehaviour {
 		isGameOver = false;
 		score = 0;
 		lives = 10;
-		GameObject background = GameObject.Find("Background");
-		background.transform.localScale = new Vector3(mapSize.x/6, mapSize.y/6, 1);
+		GameObject background = GameObject.Find("Plane");
+		background.transform.localScale = new Vector3(mapSize.x/6, 1, mapSize.y/6);
 		overlay.GetComponent<SpriteRenderer> ().color = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 		keepText = finalScoreText.text;
 		finalScore.text = "";

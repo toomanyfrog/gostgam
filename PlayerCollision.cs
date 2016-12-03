@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour {
 
 	public float goodZoneInitOpacity = 0.274f;
 	public float goodZoneEndOpacity = 0.6f;
-
+	public float cameraSkills = 17 / (12 * 1.3f);
 	private float snapshotTime = 0;
 	private float timeInGoodZone = 0;
 
@@ -44,7 +44,7 @@ public class PlayerCollision : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other) {
 
 		if (other.gameObject.tag == "Good Zone") {
-			if (snapshotTime >= 1.08) {
+			if (snapshotTime >= cameraSkills) {
 				timeInGoodZone += Time.deltaTime; 
 				GhostController ghost = other.gameObject.transform.parent.gameObject.GetComponent<GhostController> ();
 				ghost.timesSnapped += 1;

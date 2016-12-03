@@ -3,18 +3,18 @@ using System.Collections;
 
 public class GhostController : MonoBehaviour {
 
-	public float baseSpeed = 1;
-	public float basePoseTime = 2;
-	public float baseOuter = 8.5f;
+	public float baseSpeed = 2;
+	public float basePoseTime = 3;
+	public float baseWalkTime = 6;
+	public float baseOuter = 12.5f;
 	public float baseInner = 4.5f;
 
-
-	public float timeInDirection = 4;
 	public int timesSnapped = 0;
-	public int snapsAllowed = 3;
+	public int snapsAllowed = 1;
 
 	private float speed;
 	private float poseTime;
+	private float walkTime;
 	private float outer;
 	private float inner;
 
@@ -24,11 +24,13 @@ public class GhostController : MonoBehaviour {
 	private SpriteRenderer sr;
 
 	public Animator animator;
+	private GameObject green;
 
 
 	// Use this for initialization
 	void Start () {
-		
+		green = transform.Find ("green").gameObject;
+		green.SetActive (false);
 		reincarnate ();
 
 
@@ -44,24 +46,24 @@ public class GhostController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-		if (time < timeInDirection) {
+		if (time < walkTime) {
 			transform.Translate (dir * speed * Time.deltaTime);
 		} else {
 			if (pause < poseTime) {
+				green.SetActive (true);
 				sr.flipX = false;
 				animator.SetBool ("isPosing", true);
-				animator.SetInteger ("poseIndex", Mathf.RoundToInt(Random.value));
+				animator.SetInteger ("poseIndex", Mathf.RoundToInt (Random.value));
 				pause += Time.deltaTime;
 			} else {
+				green.SetActive (false);
 				animator.SetBool ("isPosing", false);
-				pickDir ();
 				transform.Translate (dir * speed * Time.deltaTime);
 				time = 0;
 				pause = 0;
 			}
-			//timeInDirection = Random.Range (1, 8);
 		}
+			//timeInDirection = Random.Range (1, 8);
 //		if (transform.position.x < (-1 * GameManager.mapSize.x / 2 - outer)) {
 //			Vector2 pos = transform.position;
 //			transform.position = new Vector2 (GameManager.mapSize.x + pos.x + outer, pos.y);
@@ -77,11 +79,18 @@ public class GhostController : MonoBehaviour {
 //			transform.position = new Vector2 (pos.x, pos.y - GameManager.mapSize.y - outer);
 //		}
 		if (transform.position.x < (-1 * GameManager.mapSize.x / 2 - outer) || transform.position.x > GameManager.mapSize.x / 2 + outer) {
-			Vector2 pos = transform.position;
-			transform.position = new Vector2 (-pos.x, pos.y);
+//			Vector2 pos = transform.position;
+//			transform.position = new Vector2 (-pos.x, pos.y);
+			dir.x = -dir.x;
+			sr.flipX = !sr.flipX;
+			transform.Translate (dir * speed * Time.deltaTime * 2);
+
 		}if (transform.position.y < (-1 * GameManager.mapSize.y / 2 - outer) || transform.position.y > GameManager.mapSize.y / 2 + outer) {
-			Vector2 pos = transform.position;
-			transform.position = new Vector2 (pos.x, -pos.y);
+//			Vector2 pos = transform.position;
+//			transform.position = new Vector2 (pos.x, -pos.y);
+			dir.y = -dir.y;
+			transform.Translate (dir * speed * Time.deltaTime * 2);
+
 		}
 	
 		if (timesSnapped >= snapsAllowed) {
@@ -115,18 +124,18 @@ public class GhostController : MonoBehaviour {
 	}
 	private void reincarnate() {
 		transform.position = new Vector3 (Random.value * GameManager.mapSize.x - GameManager.mapSize.x / 2, Random.value * GameManager.mapSize.y - GameManager.mapSize.y / 2);
-		float scale = (Random.value/5 - 0.1f) + 0.6f;
+		float scale = (Random.value/1.5f - 0.33f) + 0.5f;
 		transform.localScale = new Vector3 (scale, scale, 1);
 		pickDir (); 
 		outer = (float)Random.value + baseOuter - 0.5f;
 		inner = (float)Random.value + baseInner - 0.5f;
-		GameObject green = transform.Find ("green").gameObject;
 		GameObject red = transform.Find ("red").gameObject;
 		green.transform.localScale = new Vector3 (outer, outer, 1);
 		red.transform.localScale = new Vector3 (inner, inner, 1);
 		speed = (float)Random.value + baseSpeed - 0.5f;
 		poseTime = (float)Random.value + basePoseTime - 0.5f;
 		timesSnapped = 0;
+		walkTime = (float)Random.value*4 + baseWalkTime - 2f;
 		animator.SetBool ("isDisappearing", false);
 		animator.SetBool ("isPosing", false);
 	}
