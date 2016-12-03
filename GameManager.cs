@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour {
 
 		if (isGameOver) {
 			if (Input.GetButtonDown ("Snap")) {
+				PlayerPrefs.SetInt ("lastScore", score);
 				SceneManager.LoadScene ("main");
 			}
 			if (Input.GetButtonDown ("RT")) {
