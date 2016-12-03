@@ -23,22 +23,38 @@ public class GhostController : MonoBehaviour {
 	private Vector2 dir;
 	private SpriteRenderer sr;
 
+	public Animator animator;
+
+
 	// Use this for initialization
 	void Start () {
-		sr = GetComponent<SpriteRenderer> ();
+		
 		reincarnate ();
+
+
+	}
+
+	void Awake() {
+
+		sr = GetComponent<SpriteRenderer> ();
+		animator = GetComponent<Animator> ();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+
 		if (time < timeInDirection) {
 			transform.Translate (dir * speed * Time.deltaTime);
 		} else {
 			if (pause < poseTime) {
+				sr.flipX = false;
+				animator.SetBool ("isPosing", true);
+				animator.SetInteger ("poseIndex", Mathf.RoundToInt(Random.value));
 				pause += Time.deltaTime;
 			} else {
+				animator.SetBool ("isPosing", false);
 				pickDir ();
 				transform.Translate (dir * speed * Time.deltaTime);
 				time = 0;
@@ -70,7 +86,7 @@ public class GhostController : MonoBehaviour {
 	
 		if (timesSnapped >= snapsAllowed) {
 			reincarnate ();
-			GameManager.score += (int)(getDifficulty() * 5);
+			//GameManager.score += (int)(getDifficulty() * 50);
 		}
 		time += Time.deltaTime;
 
@@ -86,7 +102,11 @@ public class GhostController : MonoBehaviour {
 		//Debug.Log (time);
 	}
 	public void goAway() {
+		animator.SetBool ("isDisappearing", true);
+	}
+	public void actuallyGoAway() {
 		gameObject.transform.position = new Vector3 ((Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.x / 2, (Random.Range (0, 1) * 2 - 1) * GameManager.mapSize.y / 2);
+		animator.SetBool ("isDisappearing", false);
 	}
 	public float getDifficulty() {
 		float donutsize = outer - inner;
@@ -107,10 +127,15 @@ public class GhostController : MonoBehaviour {
 		speed = (float)Random.value + baseSpeed - 0.5f;
 		poseTime = (float)Random.value + basePoseTime - 0.5f;
 		timesSnapped = 0;
-
+		animator.SetBool ("isDisappearing", false);
+		animator.SetBool ("isPosing", false);
 	}
 
 
 
+	void playPoof() {
+		
+		SoundManager.instance.playPoof ();
 
+	}
 }
